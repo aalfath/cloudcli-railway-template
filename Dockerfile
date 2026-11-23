@@ -28,8 +28,10 @@ WORKDIR /opt/cloudcli
 # The tag's lockfile points 24 packages at a China npm mirror; they come from npmjs.org
 # instead (same tarballs, still checked against the lockfile's integrity hashes).
 # --ignore-scripts skips the repo's dev-only hooks (husky); the native modules are built right after.
+# @vscode/ripgrep's own installer downloads from the GitHub API (rate-limited on shared
+# build hosts), so the runtime stage links Debian's ripgrep in its place.
 RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund \
- && npm rebuild better-sqlite3 bcrypt node-pty @vscode/ripgrep \
+ && npm rebuild better-sqlite3 bcrypt node-pty \
  && node scripts/fix-node-pty.js \
  && rm -rf node_modules/@nut-tree-fork node_modules/screenshot-desktop \
  && npm cache clean --force
@@ -50,6 +52,8 @@ RUN chmod 755 /opt/cloudcli/dist-server/server/modules/cli/cli.js \
  && ln -s /opt/cloudcli/node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude /usr/local/bin/claude \
  && ln -s /opt/cloudcli/node_modules/@openai/codex/bin/codex.js /usr/local/bin/codex \
  && ln -s /opt/opencode/node_modules/.bin/opencode /usr/local/bin/opencode \
+ && mkdir -p /opt/cloudcli/node_modules/@vscode/ripgrep/bin \
+ && ln -sf /usr/bin/rg /opt/cloudcli/node_modules/@vscode/ripgrep/bin/rg \
  && cloudcli version && claude --version && codex --version && opencode --version
 COPY gitconfig /etc/gitconfig
 COPY start.sh /usr/local/bin/cloudcli-railway-start
