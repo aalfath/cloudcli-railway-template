@@ -22,8 +22,11 @@ RUN curl -fsSL --retry 3 -o cloudcli.tgz "https://registry.npmjs.org/@cloudcli-a
  && echo "${CLOUDCLI_TGZ_SHA256}  cloudcli.tgz" | sha256sum -c - \
  && tar xzf cloudcli.tgz && mv package cloudcli && rm cloudcli.tgz \
  && curl -fsSL --retry 3 -o cloudcli/package-lock.json "https://raw.githubusercontent.com/siteboon/claudecodeui/${CLOUDCLI_COMMIT}/package-lock.json" \
- && echo "${CLOUDCLI_LOCK_SHA256}  cloudcli/package-lock.json" | sha256sum -c -
+ && echo "${CLOUDCLI_LOCK_SHA256}  cloudcli/package-lock.json" | sha256sum -c - \
+ && sed -i 's#https://registry.npmmirror.com/#https://registry.npmjs.org/#g' cloudcli/package-lock.json
 WORKDIR /opt/cloudcli
+# The tag's lockfile points 24 packages at a China npm mirror; they come from npmjs.org
+# instead (same tarballs, still checked against the lockfile's integrity hashes).
 # --ignore-scripts skips the repo's dev-only hooks (husky); the native modules are built right after.
 RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund \
  && npm rebuild better-sqlite3 bcrypt node-pty @vscode/ripgrep \
