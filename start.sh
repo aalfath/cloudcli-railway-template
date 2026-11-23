@@ -24,6 +24,15 @@ done
 export DATABASE_PATH="$H/.cloudcli/auth.db"
 as_node node /opt/railway/sync-login.mjs
 
+# An OPENAI_API_KEY from the Variables signs Codex in once (CloudCLI reads ~/.codex/auth.json).
+if [ -n "${OPENAI_API_KEY:-}" ] && [ ! -s "$H/.codex/auth.json" ]; then
+  if printf '%s' "$OPENAI_API_KEY" | as_node codex login --with-api-key >/dev/null 2>&1; then
+    log "Codex signed in with OPENAI_API_KEY"
+  else
+    log "warning: could not sign Codex in with OPENAI_API_KEY; sign in from Settings > Agents instead"
+  fi
+fi
+
 # The web login stays out of the environment that terminals and agents inherit.
 unset CLOUDCLI_USERNAME CLOUDCLI_PASSWORD
 

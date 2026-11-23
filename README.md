@@ -1,3 +1,5 @@
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template/cloudcli-1?utm_medium=integration&utm_source=button&utm_campaign=cloudcli)
+
 # CloudCLI on Railway
 
 One-click [Railway](https://railway.com) template for **CloudCLI UI** (formerly Claude Code UI): a web and mobile interface for Claude Code, OpenAI Codex and OpenCode, with chat, a file tree and editor, a git panel and a terminal.
@@ -19,7 +21,7 @@ Upstream publishes no server image, so the `Dockerfile` here builds the official
 | `CLOUDCLI_USERNAME` | `admin` | Your login name (3+ characters). |
 | `CLOUDCLI_PASSWORD` | generated (`${{secret(24)}}`) | Your password (8+ characters). |
 | `ANTHROPIC_API_KEY` | empty, optional | For Claude Code. Or sign in with a Claude subscription from CloudCLI. |
-| `OPENAI_API_KEY` | empty, optional | For Codex. Or sign in with ChatGPT from CloudCLI. |
+| `OPENAI_API_KEY` | empty, optional | For Codex (signed in on first boot). Or sign in with ChatGPT from CloudCLI. |
 | `PORT` | `3001` | Leave as is. |
 
 CloudCLI normally lets the first visitor create the only account. Here the start script creates the login from `CLOUDCLI_USERNAME`/`CLOUDCLI_PASSWORD` **before** the public port opens, and refuses to start without them. CloudCLI has no password-change page: change the variables and redeploy (every browser is signed out). The login variables are removed from the environment that terminals and agents see.
