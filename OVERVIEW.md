@@ -4,7 +4,7 @@ CloudCLI (formerly Claude Code UI) is an open-source web and mobile interface fo
 
 ## About Hosting CloudCLI
 
-This template runs CloudCLI 1.37.9 as one Railway service, built from a public GitHub repo that pins the official npm release on a pinned Node 22 image. Claude Code, Codex and OpenCode come preinstalled. A volume at `/home/node` keeps your login database, chat history, agent logins and projects. Your login is created from generated variables before the public URL opens, so nobody else can claim the app. After deploying, open the URL, sign in with `CLOUDCLI_USERNAME` and `CLOUDCLI_PASSWORD` from the service's Variables tab, then sign in to an agent (subscription login or API key) in Settings → Agents. Updates arrive as Railway update notices when the repo is bumped.
+This unofficial template runs CloudCLI UI 1.37.9 (https://github.com/siteboon/claudecodeui, AGPL-3.0, by Siteboon AI B.V.) as one Railway service, built from a public GitHub repo that pins the official npm release on a pinned Node 22 image. Claude Code, Codex and OpenCode come preinstalled. A volume at `/home/node` keeps your login database, chat history, agent logins and projects. Your login is created from generated variables before the public URL opens, so nobody else can claim the app. After deploying, open the URL, sign in with `CLOUDCLI_USERNAME` and `CLOUDCLI_PASSWORD` from the service's Variables tab, then sign in to an agent (subscription login or API key) in Settings → Agents. Updates arrive as Railway update notices when the repo is bumped.
 
 ## Common Use Cases
 
